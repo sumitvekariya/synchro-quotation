@@ -1,0 +1,10 @@
+{
+  "$schema": "./node_modules/nx/schemas/workspace-schema.json",
+  "version": 2,
+  "projects": {
+    "api": "apps/api",
+    "api-interfaces": "libs/api-interfaces",
+    "synchro-quotation": "apps/synchro-quotation",
+    "synchro-quotation-e2e": "apps/synchro-quotation-e2e"
+  }
+}
