@@ -7,7 +7,7 @@ generator nestjsDto {
   output                          = "../libs/api-interfaces/src/generated/nestjs-dto"
   outputToNestJsResourceStructure = "true"
   exportRelationModifierClasses   = "true"
-  reExport                        = "false"
+  reExport                        = "true"
   createDtoPrefix                 = "Create"
   updateDtoPrefix                 = "Update"
   dtoSuffix                       = "Dto"
@@ -38,16 +38,14 @@ model Client {
 }
 
 model Panel {
-  id          String        @id @default(auto()) @map("_id") @db.ObjectId
-  name        String
-  fabrication Fabrication[]
-  incoming    Incoming[]
-  outgoing    Outgoing[]
-  quotation   Quotation?    @relation(fields: [quotationId], references: [id])
-  quotationId String?       @db.ObjectId
+  id             String          @id @default(auto()) @map("_id") @db.ObjectId
+  name           String
+  quotedProducts QuotedProduct[]
+  quotation      Quotation?      @relation(fields: [quotationId], references: [id])
+  quotationId    String?         @db.ObjectId
 }
 
-model Fabrication {
+model QuotedProduct {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   panel     Panel?   @relation(fields: [panelId], references: [id])
   panelId   String?  @db.ObjectId
@@ -55,43 +53,26 @@ model Fabrication {
   companyId String   @db.ObjectId
   unitQty   Int?
   feederQty Int?
-}
-
-model Incoming {
-  id        String  @id @default(auto()) @map("_id") @db.ObjectId
-  panel     Panel?  @relation(fields: [panelId], references: [id])
-  panelId   String? @db.ObjectId
-  company   Company @relation(fields: [companyId], references: [id])
-  companyId String  @db.ObjectId
-  unitQty   Int?
-  feederQty Int?
-}
-
-model Outgoing {
-  id        String  @id @default(auto()) @map("_id") @db.ObjectId
-  panel     Panel?  @relation(fields: [panelId], references: [id])
-  panelId   String? @db.ObjectId
-  company   Company @relation(fields: [companyId], references: [id])
-  companyId String  @db.ObjectId
-  unitQty   Int?
-  feederQty Int?
+  price     Float?
+  product   Product  @relation(fields: [productId], references: [id])
+  productId String   @db.ObjectId
+  type      String?
 }
 
 model Product {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  description String?
-  name        String   @unique
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id             String          @id @default(auto()) @map("_id") @db.ObjectId
+  description    String?
+  name           String          @unique
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  quotedProducts QuotedProduct[]
 }
 
 model Company {
-  name        String
-  description String?
-  id          String        @id @default(auto()) @map("_id") @db.ObjectId
-  fabrication Fabrication[]
-  incoming    Incoming[]
-  outgoing    Outgoing[]
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
+  name           String
+  description    String?
+  id             String          @id @default(auto()) @map("_id") @db.ObjectId
+  quotedProducts QuotedProduct[]
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
 }
