@@ -4,7 +4,8 @@
 
 export class Product {
   id: string ;
-detail: string ;
+description: string  | null;
+name: string ;
 createdAt: Date ;
 updatedAt: Date ;
 }

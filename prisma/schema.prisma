@@ -73,8 +73,8 @@ model Outgoing {
 
 model Product {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  description String
-  name        String
+  description String?
+  name        String   @unique
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }

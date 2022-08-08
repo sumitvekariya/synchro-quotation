@@ -6,6 +6,7 @@ import {Outgoing} from '../../outgoing/entities/outgoing.entity'
 
 export class Company {
   name: string ;
+description: string  | null;
 id: string ;
 fabrication?: Fabrication[] ;
 incoming?: Incoming[] ;

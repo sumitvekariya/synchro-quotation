@@ -7,6 +7,6 @@ export class Fabrication {
   id: string ;
 panel?: Panel  | null;
 panelId: string  | null;
-company?: Company ;
-companyId: string ;
+company?: Company  | null;
+companyId: string  | null;
 }

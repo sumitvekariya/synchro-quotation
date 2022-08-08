@@ -5,5 +5,6 @@
 
 
 export class CreateProductDto {
-  detail: string;
+  description?: string;
+name: string;
 }

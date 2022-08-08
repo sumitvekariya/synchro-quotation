@@ -1,5 +1,6 @@
 
   export class ConnectProductDto {
-    id: string;
+    id?: string;
+name?: string;
   }
   

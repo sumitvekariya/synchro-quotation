@@ -5,5 +5,6 @@
 
 
 export class UpdateProductDto {
-  detail?: string;
+  description?: string;
+name?: string;
 }
