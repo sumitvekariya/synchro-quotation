@@ -9,4 +9,6 @@ panel?: Panel  | null;
 panelId: string  | null;
 company?: Company ;
 companyId: string ;
+unitQty: number  | null;
+feederQty: number  | null;
 }

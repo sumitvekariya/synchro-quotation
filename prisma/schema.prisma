@@ -53,6 +53,8 @@ model Fabrication {
   panelId   String?  @db.ObjectId
   company   Company? @relation(fields: [companyId], references: [id])
   companyId String   @db.ObjectId
+  unitQty   Int?
+  feederQty Int?
 }
 
 model Incoming {
@@ -61,6 +63,8 @@ model Incoming {
   panelId   String? @db.ObjectId
   company   Company @relation(fields: [companyId], references: [id])
   companyId String  @db.ObjectId
+  unitQty   Int?
+  feederQty Int?
 }
 
 model Outgoing {
@@ -69,6 +73,8 @@ model Outgoing {
   panelId   String? @db.ObjectId
   company   Company @relation(fields: [companyId], references: [id])
   companyId String  @db.ObjectId
+  unitQty   Int?
+  feederQty Int?
 }
 
 model Product {
