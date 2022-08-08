@@ -25,6 +25,7 @@ model Quotation {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   client    Client?  @relation(fields: [clientId], references: [id])
   clientId  String?  @db.ObjectId
+  panels    Panel[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -42,14 +43,16 @@ model Panel {
   fabrication Fabrication[]
   incoming    Incoming[]
   outgoing    Outgoing[]
+  quotation   Quotation?    @relation(fields: [quotationId], references: [id])
+  quotationId String?       @db.ObjectId
 }
 
 model Fabrication {
-  id        String  @id @default(auto()) @map("_id") @db.ObjectId
-  panel     Panel?  @relation(fields: [panelId], references: [id])
-  panelId   String? @db.ObjectId
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  panel     Panel?   @relation(fields: [panelId], references: [id])
+  panelId   String?  @db.ObjectId
   company   Company? @relation(fields: [companyId], references: [id])
-  companyId String  @db.ObjectId
+  companyId String   @db.ObjectId
 }
 
 model Incoming {
@@ -77,6 +80,7 @@ model Product {
 
 model Company {
   name        String
+  description String?
   id          String        @id @default(auto()) @map("_id") @db.ObjectId
   fabrication Fabrication[]
   incoming    Incoming[]
