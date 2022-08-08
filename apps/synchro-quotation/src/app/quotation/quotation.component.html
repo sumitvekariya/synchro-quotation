@@ -1,0 +1,121 @@
+<div class="container mx-auto" [formGroup]="quoteForm">
+    <div class="mb-2">
+        <button color="primary" mat-raised-button (click)="addPanel()">Add Panel</button>
+    </div>
+    <div formArrayName="panels">
+        <div>
+            <mat-accordion multi>
+                <mat-expansion-panel *ngFor="let p of panelsFormArray.controls; let i=index" [formGroupName]="i">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            <span (click)="$event.stopImmediatePropagation()" contenteditable (blur)="setPanelName($event, p)">{{p.get('name')?.value}}</span>
+                        </mat-panel-title>
+                        <mat-panel-description class="justify-end">
+                            <mat-icon (click)="$event.stopImmediatePropagation();addPanel();">add</mat-icon>
+                            <mat-icon (click)="$event.stopImmediatePropagation();panelsFormArray.removeAt(i);">delete</mat-icon>
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <mat-tab-group mat-align-tabs="start">
+                        <mat-tab label="Fabrication & Busbar">
+                            <div formArrayName="fabrication">
+                                <div *ngFor="let product of getFabricationFormControl(i).controls; let j=index">
+                                    <div [formGroupName]="j"
+                                        class="pt-2 flex flex-row gap-2 justify-center items-center">
+                                        <mat-form-field class="basis-1/2" appearance="outline">
+                                            <mat-label>Detail</mat-label>
+                                            <input matInput formControlName="detail" placeholder="Detail">
+                                        </mat-form-field>
+                                        <mat-form-field class="basis-1/5" appearance="outline">
+                                            <mat-label>Company</mat-label>
+                                            <input matInput formControlName="company" placeholder="Company">
+                                        </mat-form-field>
+                                        <mat-form-field class="basis-1/6" appearance="outline">
+                                            <mat-label>Quantity</mat-label>
+                                            <input matInput type="number" formControlName="qty"
+                                                placeholder="Quantity">
+                                        </mat-form-field>
+                                        <mat-form-field class="basis-1/6" appearance="outline">
+                                            <mat-label>Price</mat-label>
+                                            <input matInput type="number" formControlName="price"
+                                                placeholder="Price">
+                                        </mat-form-field>
+                                        <div class="basis-1/7 flex flex-row">
+                                            <mat-icon (click)="getFabricationFormControl(i).push(createProductFormGroup())">add</mat-icon>
+                                            <mat-icon (click)="getFabricationFormControl(i).removeAt(j)">delete</mat-icon>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-tab>
+                        <mat-tab label="Incomer">
+                            <div formArrayName="incomer">
+                                <div *ngFor="let product of getIncomerFormControl(i).controls; let j=index">
+                                    <div [formGroupName]="j"
+                                        class="pt-2 flex flex-row gap-2 justify-center items-center">
+                                        <mat-form-field class="basis-1/2" appearance="outline">
+                                            <mat-label>Detail</mat-label>
+                                            <input matInput formControlName="detail" placeholder="Detail">
+                                        </mat-form-field>
+                                        <mat-form-field class="basis-1/5" appearance="outline">
+                                            <mat-label>Company</mat-label>
+                                            <input matInput formControlName="company" placeholder="Company">
+                                        </mat-form-field>
+                                        <mat-form-field class="basis-1/6" appearance="outline">
+                                            <mat-label>Quantity</mat-label>
+                                            <input matInput type="number" formControlName="qty"
+                                                placeholder="Quantity">
+                                        </mat-form-field>
+                                        <mat-form-field class="basis-1/6" appearance="outline">
+                                            <mat-label>Price</mat-label>
+                                            <input matInput type="number" formControlName="price"
+                                                placeholder="Price">
+                                        </mat-form-field>
+                                        <div class="basis-1/7 flex flex-row">
+                                            <mat-icon (click)="getIncomerFormControl(i).push(createProductFormGroup())">add</mat-icon>
+                                            <mat-icon (click)="getIncomerFormControl(i).removeAt(j)">delete</mat-icon>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-tab>
+                        <mat-tab label="Outgoing Feeder">
+                            <div formArrayName="outgoing">
+                                <div *ngFor="let product of getOutgoingFormControl(i).controls; let j=index">
+                                    <div [formGroupName]="j"
+                                        class="pt-2 flex flex-row gap-2 justify-center items-center">
+                                        <mat-form-field class="basis-1/2" appearance="outline">
+                                            <mat-label>Detail</mat-label>
+                                            <input matInput formControlName="detail" placeholder="Detail">
+                                        </mat-form-field>
+                                        <mat-form-field class="basis-1/5" appearance="outline">
+                                            <mat-label>Company</mat-label>
+                                            <input matInput formControlName="company" placeholder="Company">
+                                        </mat-form-field>
+                                        <mat-form-field class="basis-1/6" appearance="outline">
+                                            <mat-label>Quantity</mat-label>
+                                            <input matInput type="number" formControlName="qty"
+                                                placeholder="Quantity">
+                                        </mat-form-field>
+                                        <mat-form-field class="basis-1/6" appearance="outline">
+                                            <mat-label>Price</mat-label>
+                                            <input matInput type="number" formControlName="price"
+                                                placeholder="Price">
+                                        </mat-form-field>
+                                        <div class="basis-1/7 flex flex-row">
+                                            <mat-icon (click)="getOutgoingFormControl(i).push(createProductFormGroup())">add</mat-icon>
+                                            <mat-icon (click)="getOutgoingFormControl(i).removeAt(j)">delete</mat-icon>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-tab>
+                    </mat-tab-group>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </div>
+    </div>
+</div>
+
+<!-- <pre *ngFor="let a of panelsFormArray.controls">
+    {{a.value | json}}
+</pre> -->

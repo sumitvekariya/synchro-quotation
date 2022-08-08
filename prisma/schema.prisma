@@ -1,0 +1,86 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+generator nestjsDto {
+  provider                        = "prisma-generator-nestjs-dto"
+  output                          = "../libs/api-interfaces/src/generated/nestjs-dto"
+  outputToNestJsResourceStructure = "true"
+  exportRelationModifierClasses   = "true"
+  reExport                        = "false"
+  createDtoPrefix                 = "Create"
+  updateDtoPrefix                 = "Update"
+  dtoSuffix                       = "Dto"
+  entityPrefix                    = ""
+  entitySuffix                    = ""
+  fileNamingStyle                 = "camel"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Quotation {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  client    Client?  @relation(fields: [clientId], references: [id])
+  clientId  String?  @db.ObjectId
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Client {
+  name       String?
+  address    String?
+  id         String      @id @default(auto()) @map("_id") @db.ObjectId
+  quotations Quotation[]
+}
+
+model Panel {
+  id          String        @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  fabrication Fabrication[]
+  incoming    Incoming[]
+  outgoing    Outgoing[]
+}
+
+model Fabrication {
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  panel     Panel?  @relation(fields: [panelId], references: [id])
+  panelId   String? @db.ObjectId
+  company   Company? @relation(fields: [companyId], references: [id])
+  companyId String  @db.ObjectId
+}
+
+model Incoming {
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  panel     Panel?  @relation(fields: [panelId], references: [id])
+  panelId   String? @db.ObjectId
+  company   Company @relation(fields: [companyId], references: [id])
+  companyId String  @db.ObjectId
+}
+
+model Outgoing {
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  panel     Panel?  @relation(fields: [panelId], references: [id])
+  panelId   String? @db.ObjectId
+  company   Company @relation(fields: [companyId], references: [id])
+  companyId String  @db.ObjectId
+}
+
+model Product {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  detail    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Company {
+  name        String
+  id          String        @id @default(auto()) @map("_id") @db.ObjectId
+  fabrication Fabrication[]
+  incoming    Incoming[]
+  outgoing    Outgoing[]
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+}
