@@ -72,10 +72,11 @@ model Outgoing {
 }
 
 model Product {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  detail    String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  description String
+  name        String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 model Company {
